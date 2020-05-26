@@ -1,4 +1,4 @@
-export const createPost = (userId) => ({
-  type: "CREATE_POST",
+export const createForm = (userId) => ({
+  type: "CREATE_FORM",
   userId,
 });
