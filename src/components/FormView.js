@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Redirect } from "@reach/router";
 
 //redux
@@ -14,9 +14,9 @@ import Col from "react-bootstrap/Col";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
-const EditPane = () => (
+const EditPane = ({ tab, setTab }) => (
   <Col>
-    <Tabs>
+    <Tabs activeKey={tab} onSelect={(k) => setTab(k)}>
       <Tab eventKey="addField" title="Add a Field">
         Add fields
       </Tab>
@@ -30,25 +30,30 @@ const EditPane = () => (
   </Col>
 );
 
-const Preview = ({ form }) => {
+const PreviewPane = ({ form, setTab }) => {
   return (
     <Col>
-      <h1>{form.title}</h1>
-      <p>{form.desc}</p>
+      <div onClick={() => setTab("editForm")}>
+        <h1>{form.title}</h1>
+        <p>{form.desc}</p>
+      </div>
     </Col>
   );
 };
 
 const FormView = ({ formId }) => {
   const form = useSelector(selectForm(formId));
+  const [tab, setTab] = useState("addField");
+
   if (!form) {
     return <Redirect noThrow to="/" />;
   }
+
   return (
     <Container fluid>
       <Row>
-        <EditPane />
-        <Preview form={form} />
+        <EditPane tab={tab} setTab={setTab} />
+        <PreviewPane form={form} setTab={setTab} />
       </Row>
     </Container>
   );
