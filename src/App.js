@@ -16,10 +16,14 @@ const mapStateToProps = ({ forms }) => ({ forms });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(actions, dispatch);
 
-const App = ({ forms, createForm }) => (
+const App = ({ forms, createForm, createField, updateField }) => (
   <Router>
     <FormsList path="/" forms={forms} createForm={createForm} />
-    <FormView path="/:formId" />
+    <FormView
+      path="/:formId"
+      updateField={updateField}
+      createField={createField}
+    />
   </Router>
 );
 
