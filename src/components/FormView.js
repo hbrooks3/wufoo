@@ -14,7 +14,7 @@ import Col from "react-bootstrap/Col";
 import PreviewPane from "components/PeviewPane";
 import EditPane from "components/EditPane";
 
-const FormView = ({ formId, createField, updateField }) => {
+const FormView = ({ formId }) => {
   const form = useSelector(selectForm(formId));
   const [tab, setTab] = useState("addField");
   const [fieldIndex, setFieldIndex] = useState(0);
@@ -32,8 +32,6 @@ const FormView = ({ formId, createField, updateField }) => {
             setTab={setTab}
             fieldIndex={fieldIndex}
             form={form}
-            updateField={updateField}
-            createField={createField}
           />
         </Col>
         <Col>

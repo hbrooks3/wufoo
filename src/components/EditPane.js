@@ -1,9 +1,9 @@
 import React from "react";
 
-//redux
+// redux
 import { useSelector, useDispatch } from "react-redux";
 import { selectField, selectForm } from "selectors";
-import { updateForm } from "actions";
+import { updateForm, createField, updateField } from "actions";
 
 // tabs
 import Tabs from "react-bootstrap/Tabs";
@@ -13,14 +13,44 @@ import Tab from "react-bootstrap/Tab";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const EditField = ({ fieldId, updateField }) => {
-  const field = useSelector(selectField(fieldId));
-  const { label } = field;
-  const handleChange = (event) => {
-    const changed = event.target.name;
-    const change = event.target.value;
-    updateField({ ...field, [changed]: change });
+const AddField = ({ formId }) => {
+  const dispatch = useDispatch();
+  const handleClick = (inputType) => () => {
+    dispatch(createField(formId, inputType));
   };
+
+  return (
+    <>
+      <style type="text/css">
+        {`
+        .btn-spaced {
+          margin: 10px;
+        }
+        `}
+      </style>
+      <Button size="spaced" onClick={handleClick("text")}>
+        Single Line Text
+      </Button>
+      <Button size="spaced" onClick={handleClick("number")}>
+        Number
+      </Button>
+    </>
+  );
+};
+
+const EditField = ({ fieldId }) => {
+  const dispatch = useDispatch();
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    dispatch(updateField({ ...field, [name]: value }));
+  };
+
+  const field = useSelector(selectField(fieldId));
+
+  if (!field) return null;
+
+  const { label } = field;
+
   return (
     <Form>
       <Form.Group>
@@ -68,26 +98,16 @@ const EditForm = ({ formId }) => {
   );
 };
 
-const EditPane = ({
-  tab,
-  setTab,
-  fieldIndex,
-  form,
-  createField,
-  updateField,
-}) => {
+const EditPane = ({ tab, setTab, fieldIndex, form }) => {
   const selectedField = form.fields[fieldIndex];
   const { formId } = form;
   return (
     <Tabs activeKey={tab} onSelect={(k) => setTab(k)}>
       <Tab eventKey="addField" title="Add a Field">
-        Add fields
-        <Button onClick={createField.bind(null, formId, "text")}>
-          Single Line Text
-        </Button>
+        <AddField formId={formId} />
       </Tab>
       <Tab eventKey="editField" title="Field Settings">
-        <EditField fieldId={selectedField} updateField={updateField} />
+        <EditField fieldId={selectedField} />
       </Tab>
       <Tab eventKey="editForm" title="Form Settings">
         <EditForm formId={formId} />

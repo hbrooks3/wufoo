@@ -23,6 +23,7 @@ export default (state = [], action) => {
         descAlignment: "left",
         lang: "English",
         labelPlacement: "top",
+        fields: [],
       };
       return [...state, newForm];
     case "CREATE_FIELD": {
