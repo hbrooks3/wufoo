@@ -4,11 +4,19 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectField } from "selectors";
 
-// layout
-import Col from "react-bootstrap/Col";
-
 // forms
 import Form from "react-bootstrap/Form";
+
+const CustomInput = ({ inputType }) => {
+  switch (inputType) {
+    case "textarea":
+      return <Form.Control as="textarea" />;
+    case "select":
+      return <Form.Control as="select" />;
+    default:
+      return <Form.Control as="input" type={inputType} />;
+  }
+};
 
 const FieldPreview = ({ fieldId, setTab, setFieldIndex }) => {
   const field = useSelector(selectField(fieldId));
@@ -26,7 +34,7 @@ const FieldPreview = ({ fieldId, setTab, setFieldIndex }) => {
   return (
     <Form.Group onClick={editField}>
       <Form.Label>{label}</Form.Label>
-      <Form.Control as="input" />
+      <CustomInput inputType={inputType} />
     </Form.Group>
   );
 };
@@ -34,7 +42,7 @@ const FieldPreview = ({ fieldId, setTab, setFieldIndex }) => {
 const PreviewPane = ({ form, setTab, setFieldIndex }) => {
   const { title, desc, fields } = form;
   return (
-    <Col>
+    <>
       <div onClick={setTab.bind(null, "editForm")}>
         <h1>{title}</h1>
         <p>{desc}</p>
@@ -47,7 +55,7 @@ const PreviewPane = ({ form, setTab, setFieldIndex }) => {
           setFieldIndex={setFieldIndex.bind(null, index)}
         />
       ))}
-    </Col>
+    </>
   );
 };
 

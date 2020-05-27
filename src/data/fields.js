@@ -17,7 +17,7 @@ export default [
     fieldId: "hbk",
     formId: "abcd",
     label: "Text",
-    inputType: "singleText",
+    inputType: "text",
     size: "m",
     placeholder: "",
     predefined: "",
