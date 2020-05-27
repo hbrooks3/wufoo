@@ -8,6 +8,7 @@ import { selectForm } from "selectors";
 // layout
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 // components
 import PreviewPane from "components/PeviewPane";
@@ -25,19 +26,23 @@ const FormView = ({ formId, createField, updateField }) => {
   return (
     <Container fluid>
       <Row>
-        <EditPane
-          tab={tab}
-          setTab={setTab}
-          fieldIndex={fieldIndex}
-          form={form}
-          updateField={updateField}
-          createField={createField}
-        />
-        <PreviewPane
-          form={form}
-          setTab={setTab}
-          setFieldIndex={setFieldIndex}
-        />
+        <Col>
+          <EditPane
+            tab={tab}
+            setTab={setTab}
+            fieldIndex={fieldIndex}
+            form={form}
+            updateField={updateField}
+            createField={createField}
+          />
+        </Col>
+        <Col>
+          <PreviewPane
+            form={form}
+            setTab={setTab}
+            setFieldIndex={setFieldIndex}
+          />
+        </Col>
       </Row>
     </Container>
   );
