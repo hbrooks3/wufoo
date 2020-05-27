@@ -1,11 +1,9 @@
 import React from "react";
 
 //redux
-import { useSelector } from "react-redux";
-import { selectField } from "selectors";
-
-// layout
-import Col from "react-bootstrap/Col";
+import { useSelector, useDispatch } from "react-redux";
+import { selectField, selectForm } from "selectors";
+import { updateForm } from "actions";
 
 // tabs
 import Tabs from "react-bootstrap/Tabs";
@@ -38,6 +36,38 @@ const EditField = ({ fieldId, updateField }) => {
   );
 };
 
+const EditForm = ({ formId }) => {
+  const dispatch = useDispatch();
+  const form = useSelector(selectForm(formId));
+  const { title, desc } = form;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    dispatch(updateForm({ ...form, [name]: value }));
+  };
+  return (
+    <Form>
+      <Form.Group>
+        <Form.Label>From Title</Form.Label>
+        <Form.Control
+          type="text"
+          name="title"
+          value={title}
+          onChange={handleChange}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          as="textarea"
+          name="desc"
+          value={desc}
+          onChange={handleChange}
+        />
+      </Form.Group>
+    </Form>
+  );
+};
+
 const EditPane = ({
   tab,
   setTab,
@@ -49,22 +79,20 @@ const EditPane = ({
   const selectedField = form.fields[fieldIndex];
   const { formId } = form;
   return (
-    <Col>
-      <Tabs activeKey={tab} onSelect={(k) => setTab(k)}>
-        <Tab eventKey="addField" title="Add a Field">
-          Add fields
-          <Button onClick={createField.bind(null, formId, "text")}>
-            Single Line Text
-          </Button>
-        </Tab>
-        <Tab eventKey="editField" title="Field Settings">
-          <EditField fieldId={selectedField} updateField={updateField} />
-        </Tab>
-        <Tab eventKey="editForm" title="Form Settings">
-          Form Settings
-        </Tab>
-      </Tabs>
-    </Col>
+    <Tabs activeKey={tab} onSelect={(k) => setTab(k)}>
+      <Tab eventKey="addField" title="Add a Field">
+        Add fields
+        <Button onClick={createField.bind(null, formId, "text")}>
+          Single Line Text
+        </Button>
+      </Tab>
+      <Tab eventKey="editField" title="Field Settings">
+        <EditField fieldId={selectedField} updateField={updateField} />
+      </Tab>
+      <Tab eventKey="editForm" title="Form Settings">
+        <EditForm formId={formId} />
+      </Tab>
+    </Tabs>
   );
 };
 
