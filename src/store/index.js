@@ -6,10 +6,9 @@ import rootReducer from "reducers";
 
 // default data
 import forms from "data/forms";
+import fields from "data/fields";
 
-const defaultState = {
-  forms,
-};
+const defaultState = { forms, fields };
 
 const enhancers = compose(
   window.devToolsExtension ? window.devToolsExtension() : (f) => f

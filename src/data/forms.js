@@ -8,5 +8,6 @@ export default [
     descAlignment: "left",
     lang: "English",
     labelPlacement: "top",
+    fields: ["xyz", "hbk"],
   },
 ];
