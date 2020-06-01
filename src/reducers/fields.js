@@ -1,5 +1,5 @@
 const default_labels = {
-  text: "Untitiled",
+  text: "Untitled",
   number: "Number",
   textarea: "Untitled",
   multiple: "Select a Choice",

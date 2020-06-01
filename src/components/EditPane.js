@@ -61,7 +61,7 @@ const EditForm = ({ formId }) => {
   return (
     <Form>
       <Form.Group>
-        <Form.Label>From Title</Form.Label>
+        <Form.Label>Form Title</Form.Label>
         <Form.Control
           type="text"
           name="title"
