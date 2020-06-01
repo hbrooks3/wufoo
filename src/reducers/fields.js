@@ -9,15 +9,7 @@ const default_labels = {
 
 export default (state = [], action) => {
   switch (action.type) {
-    case "UPDATE_FIELD":
-      const { fieldId } = action.field;
-      const index = state.findIndex((field) => field.fieldId === fieldId);
-      return [
-        ...state.slice(0, index),
-        action.field,
-        ...state.slice(index + 1),
-      ];
-    case "CREATE_FIELD":
+    case "CREATE_FIELD": {
       const { formId, inputType } = action;
       const newField = {
         fieldId: action.fieldId,
@@ -34,6 +26,22 @@ export default (state = [], action) => {
         },
       };
       return [...state, newField];
+    }
+    case "UPDATE_FIELD": {
+      const { fieldId } = action.field;
+      const index = state.findIndex((field) => field.fieldId === fieldId);
+      return [
+        ...state.slice(0, index),
+        action.field,
+        ...state.slice(index + 1),
+      ];
+    }
+    case "DELETE_FIELD": {
+      const index = state.findIndex(
+        (field) => field.fieldId === action.fieldId
+      );
+      return [...state.slice(0, index), ...state.slice(index + 1)];
+    }
     default:
       return state;
   }

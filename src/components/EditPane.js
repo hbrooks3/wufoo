@@ -22,8 +22,8 @@ const EditField = ({ fieldId }) => {
     const { name, value } = event.target;
     dispatch(updateField({ ...field, [name]: value }));
   };
-  const handleDelete = (event) => {
-    dispatch(updateField(fieldId));
+  const handleDelete = () => {
+    dispatch(deleteField(fieldId));
   };
 
   const field = useSelector(selectField(fieldId));
@@ -43,7 +43,9 @@ const EditField = ({ fieldId }) => {
           onChange={handleChange}
         />
       </Form.Group>
-      <Button variant="danger">Delete Field</Button>
+      <Button variant="danger" onClick={handleDelete}>
+        Delete Field
+      </Button>
     </Form>
   );
 };

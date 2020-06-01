@@ -1,10 +1,20 @@
 const form = (state = {}, action) => {
   switch (action.type) {
+    case "UPDATE_FORM":
+      return action.form;
     case "CREATE_FIELD":
       const fields = [...state.fields, action.fieldId];
       return { ...state, fields };
-    case "UPDATE_FORM":
-      return action.form;
+    case "DELETE_FIELD": {
+      const fieldIndex = state.fields.findIndex(
+        (fieldId) => fieldId === action.fieldId
+      );
+      const fields = [
+        ...state.fields.slice(0, fieldIndex),
+        ...state.fields.slice(fieldIndex + 1),
+      ];
+      return { ...state, fields };
+    }
     default:
       return state;
   }
@@ -26,14 +36,6 @@ export default (state = [], action) => {
         fields: [],
       };
       return [...state, newForm];
-    case "CREATE_FIELD": {
-      const index = state.findIndex((form) => form.formId === action.formId);
-      return [
-        ...state.slice(0, index),
-        form(state[index], action),
-        ...state.slice(index + 1),
-      ];
-    }
     case "UPDATE_FORM": {
       const index = state.findIndex(
         (form) => form.formId === action.form.formId
@@ -42,6 +44,24 @@ export default (state = [], action) => {
         ...state.slice(0, index),
         form(state[index], action),
         ...state.slice(index + 1),
+      ];
+    }
+    case "CREATE_FIELD": {
+      const index = state.findIndex((form) => form.formId === action.formId);
+      return [
+        ...state.slice(0, index),
+        form(state[index], action),
+        ...state.slice(index + 1),
+      ];
+    }
+    case "DELETE_FIELD": {
+      const formIndex = state.findIndex((form) =>
+        form.fields.includes(action.fieldId)
+      );
+      return [
+        ...state.slice(0, formIndex),
+        form(state[formIndex], action),
+        ...state.slice(formIndex + 1),
       ];
     }
     default:

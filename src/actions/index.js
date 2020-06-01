@@ -8,6 +8,11 @@ export const updateForm = (form) => ({
   form,
 });
 
+export const deleteForm = (formId) => ({
+  type: "DELETE_FORM",
+  formId,
+});
+
 export const createField = (formId, inputType) => ({
   type: "CREATE_FIELD",
   formId,
@@ -18,4 +23,9 @@ export const createField = (formId, inputType) => ({
 export const updateField = (field) => ({
   type: "UPDATE_FIELD",
   field,
+});
+
+export const deleteField = (fieldId) => ({
+  type: "DELETE_FIELD",
+  fieldId,
 });
