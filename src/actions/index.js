@@ -1,3 +1,5 @@
+// forms
+
 export const createForm = (userId) => ({
   type: "CREATE_FORM",
   userId,
@@ -12,6 +14,8 @@ export const deleteForm = (formId) => ({
   type: "DELETE_FORM",
   formId,
 });
+
+// fields
 
 export const createField = (formId, inputType) => ({
   type: "CREATE_FIELD",

@@ -42,6 +42,9 @@ export default (state = [], action) => {
       );
       return [...state.slice(0, index), ...state.slice(index + 1)];
     }
+    case "DELETE_FORM": {
+      return state.filter((field) => field.formId !== action.formId);
+    }
     default:
       return state;
   }

@@ -3,7 +3,7 @@ import React from "react";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { selectField, selectForm } from "selectors";
-import { updateForm, updateField, deleteField } from "actions";
+import { updateForm, deleteForm, updateField, deleteField } from "actions";
 
 // tabs
 import Tabs from "react-bootstrap/Tabs";
@@ -58,6 +58,9 @@ const EditForm = ({ formId }) => {
     const { name, value } = event.target;
     dispatch(updateForm({ ...form, [name]: value }));
   };
+  const handleDelete = () => {
+    dispatch(deleteForm(formId));
+  };
   return (
     <Form>
       <Form.Group>
@@ -78,6 +81,9 @@ const EditForm = ({ formId }) => {
           onChange={handleChange}
         />
       </Form.Group>
+      <Button variant="danger" onClick={handleDelete}>
+        Delete Form
+      </Button>
     </Form>
   );
 };

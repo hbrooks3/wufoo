@@ -46,6 +46,9 @@ export default (state = [], action) => {
         ...state.slice(index + 1),
       ];
     }
+    case "DELETE_FORM": {
+      return state.filter((form) => form.formId !== action.formId);
+    }
     case "CREATE_FIELD": {
       const index = state.findIndex((form) => form.formId === action.formId);
       return [
