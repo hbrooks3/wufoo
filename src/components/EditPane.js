@@ -3,7 +3,7 @@ import React from "react";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { selectField, selectForm } from "selectors";
-import { updateForm, createField, updateField } from "actions";
+import { updateForm, updateField, deleteField } from "actions";
 
 // tabs
 import Tabs from "react-bootstrap/Tabs";
@@ -13,36 +13,17 @@ import Tab from "react-bootstrap/Tab";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const AddField = ({ formId }) => {
-  const dispatch = useDispatch();
-  const handleClick = (inputType) => () => {
-    dispatch(createField(formId, inputType));
-  };
-
-  return (
-    <>
-      <style type="text/css">
-        {`
-        .btn-spaced {
-          margin: 10px;
-        }
-        `}
-      </style>
-      <Button size="spaced" onClick={handleClick("text")}>
-        Single Line Text
-      </Button>
-      <Button size="spaced" onClick={handleClick("number")}>
-        Number
-      </Button>
-    </>
-  );
-};
+// components
+import AddFieldTab from "components/AddFieldTab";
 
 const EditField = ({ fieldId }) => {
   const dispatch = useDispatch();
   const handleChange = (event) => {
     const { name, value } = event.target;
     dispatch(updateField({ ...field, [name]: value }));
+  };
+  const handleDelete = (event) => {
+    dispatch(updateField(fieldId));
   };
 
   const field = useSelector(selectField(fieldId));
@@ -62,6 +43,7 @@ const EditField = ({ fieldId }) => {
           onChange={handleChange}
         />
       </Form.Group>
+      <Button variant="danger">Delete Field</Button>
     </Form>
   );
 };
@@ -104,7 +86,7 @@ const EditPane = ({ tab, setTab, fieldIndex, form }) => {
   return (
     <Tabs activeKey={tab} onSelect={(k) => setTab(k)}>
       <Tab eventKey="addField" title="Add a Field">
-        <AddField formId={formId} />
+        <AddFieldTab formId={formId} />
       </Tab>
       <Tab eventKey="editField" title="Field Settings">
         <EditField fieldId={selectedField} />

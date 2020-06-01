@@ -1,3 +1,12 @@
+const default_labels = {
+  text: "Untitiled",
+  number: "Number",
+  textarea: "Untitled",
+  multiple: "Select a Choice",
+  checkboxes: "Check All That Apply",
+  dropdown: "Select a Choice",
+};
+
 export default (state = [], action) => {
   switch (action.type) {
     case "UPDATE_FIELD":
@@ -14,7 +23,7 @@ export default (state = [], action) => {
         fieldId: action.fieldId,
         formId,
         inputType,
-        label: "Label",
+        label: default_labels[inputType],
         size: "m",
         placeholder: "",
         predefined: "",
