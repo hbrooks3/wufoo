@@ -6,13 +6,9 @@ const form = (state = {}, action) => {
       const fields = [...state.fields, action.fieldId];
       return { ...state, fields };
     case "DELETE_FIELD": {
-      const fieldIndex = state.fields.findIndex(
-        (fieldId) => fieldId === action.fieldId
+      const fields = state.fields.filter(
+        (field) => field.fieldId !== action.fieldId
       );
-      const fields = [
-        ...state.fields.slice(0, fieldIndex),
-        ...state.fields.slice(fieldIndex + 1),
-      ];
       return { ...state, fields };
     }
     default:
