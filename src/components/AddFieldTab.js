@@ -10,32 +10,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-const fieldTypes = [
-  {
-    type: "text",
-    display: "Single Line Text",
-  },
-  {
-    type: "number",
-    display: "Number",
-  },
-  {
-    type: "textarea",
-    display: "Paragraph Text",
-  },
-  {
-    type: "checkboxes",
-    display: "Checkboxes",
-  },
-  {
-    type: "multiple",
-    display: "Multiple Choice",
-  },
-  {
-    type: "dropdown",
-    display: "Dropdown",
-  },
-];
+// data
+import { fieldTypes } from "data/constants";
 
 const ButtonCol = ({ type, display, handleClick }) => (
   <Col className="my-3">
