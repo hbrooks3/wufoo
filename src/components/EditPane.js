@@ -2,8 +2,8 @@ import React from "react";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { selectField, selectForm } from "selectors";
-import { updateForm, deleteForm, updateField, deleteField } from "actions";
+import { selectForm } from "selectors";
+import { updateForm, deleteForm } from "actions";
 
 // tabs
 import Tabs from "react-bootstrap/Tabs";
@@ -15,40 +15,7 @@ import Button from "react-bootstrap/Button";
 
 // components
 import AddFieldTab from "components/AddFieldTab";
-
-const EditField = ({ fieldId }) => {
-  const dispatch = useDispatch();
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    dispatch(updateField({ ...field, [name]: value }));
-  };
-  const handleDelete = () => {
-    dispatch(deleteField(fieldId));
-  };
-
-  const field = useSelector(selectField(fieldId));
-
-  if (!field) return null;
-
-  const { label } = field;
-
-  return (
-    <Form>
-      <Form.Group>
-        <Form.Label>Field Label</Form.Label>
-        <Form.Control
-          as="textarea"
-          name="label"
-          value={label}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Button variant="danger" onClick={handleDelete}>
-        Delete Field
-      </Button>
-    </Form>
-  );
-};
+import EditFieldTab from "components/EditFieldTab";
 
 const EditForm = ({ formId }) => {
   const dispatch = useDispatch();
@@ -97,7 +64,7 @@ const EditPane = ({ tab, setTab, fieldIndex, form }) => {
         <AddFieldTab formId={formId} />
       </Tab>
       <Tab eventKey="editField" title="Field Settings">
-        <EditField fieldId={selectedField} />
+        <EditFieldTab fieldId={selectedField} />
       </Tab>
       <Tab eventKey="editForm" title="Form Settings">
         <EditForm formId={formId} />

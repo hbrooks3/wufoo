@@ -8,10 +8,8 @@ export default [
     placeholder: "",
     predefined: "",
     instructions: "",
-    options: {
-      required: false,
-      noDuplicates: false,
-    },
+    required: false,
+    noDuplicates: false,
   },
   {
     fieldId: "hbk",
@@ -22,9 +20,7 @@ export default [
     placeholder: "",
     predefined: "",
     instructions: "",
-    options: {
-      required: false,
-      noDuplicates: false,
-    },
+    required: false,
+    noDuplicates: false,
   },
 ];

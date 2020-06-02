@@ -7,39 +7,51 @@ import { selectField } from "selectors";
 // forms
 import Form from "react-bootstrap/Form";
 
-const CustomInput = ({ inputType }) => {
+const CustomInput = ({ inputType, size }) => {
   switch (inputType) {
+    case "text":
+      return <Form.Control type="text" size={size} />;
+    case "number":
+      return <Form.Control type="number" size={size} />;
     case "textarea":
-      return <Form.Control as="textarea" />;
-    case "select":
-      return <Form.Control as="select" />;
+      return <Form.Control as="textarea" size={size} />;
     default:
-      return <Form.Control as="input" type={inputType} />;
+      return (
+        <Form.Control
+          type="text"
+          size={size}
+          placeholder={`${inputType} not yet supported :(`}
+        />
+      );
   }
 };
 
-const FieldPreview = ({ fieldId, setTab, setFieldIndex }) => {
+const FieldPreview = ({ fieldId, setTab, setFieldIndex, selected }) => {
   const field = useSelector(selectField(fieldId));
 
   if (!field) {
     return null;
   }
 
-  const { label, inputType } = field;
+  const { label, instructions } = field;
   const editField = () => {
     setTab("editField");
     setFieldIndex();
   };
 
   return (
-    <Form.Group onClick={editField}>
+    <Form.Group
+      onClick={editField}
+      // className={selected && "border border-primary"}
+    >
       <Form.Label>{label}</Form.Label>
-      <CustomInput inputType={inputType} />
+      <CustomInput {...field} />
+      <Form.Text>{instructions}</Form.Text>
     </Form.Group>
   );
 };
 
-const PreviewPane = ({ form, setTab, setFieldIndex }) => {
+const PreviewPane = ({ form, setTab, setFieldIndex, fieldIndex }) => {
   const { title, desc, fields } = form;
   return (
     <>
@@ -53,6 +65,7 @@ const PreviewPane = ({ form, setTab, setFieldIndex }) => {
           fieldId={fieldId}
           setTab={setTab}
           setFieldIndex={setFieldIndex.bind(null, index)}
+          selected={fieldIndex === index}
         />
       ))}
     </>

@@ -20,10 +20,8 @@ export default (state = [], action) => {
         placeholder: "",
         predefined: "",
         instructions: "",
-        options: {
-          required: false,
-          noDuplicates: false,
-        },
+        required: false,
+        noDuplicates: false,
       };
       return [...state, newField];
     }

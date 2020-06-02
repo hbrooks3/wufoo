@@ -39,6 +39,7 @@ const FormView = ({ formId }) => {
             form={form}
             setTab={setTab}
             setFieldIndex={setFieldIndex}
+            fieldIndex={fieldIndex}
           />
         </Col>
       </Row>
