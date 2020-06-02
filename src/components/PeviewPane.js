@@ -42,7 +42,7 @@ const FieldPreview = ({ fieldId, setTab, setFieldIndex, selected }) => {
   return (
     <Form.Group
       onClick={editField}
-      className={selected ? "border border-primary p-2" : "p-2"}
+      className={selected ? "border border-primary p-2" : "px-2"}
     >
       <Form.Label>{label}</Form.Label>
       <CustomInput {...field} />
@@ -59,7 +59,7 @@ const PreviewPane = ({ form, setTab, tab, setFieldIndex, fieldIndex }) => {
     <>
       <div
         onClick={setTab.bind(null, "editForm")}
-        className={formSelected ? "border border-primary p-2" : "p-2"}
+        className={formSelected ? "border border-primary px-2" : "px-2"}
       >
         <h1>{title}</h1>
         <p>{desc}</p>
