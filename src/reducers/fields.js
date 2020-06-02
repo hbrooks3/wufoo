@@ -29,12 +29,9 @@ export default (state = [], action) => {
     }
     case "UPDATE_FIELD": {
       const { fieldId } = action.field;
-      const index = state.findIndex((field) => field.fieldId === fieldId);
-      return [
-        ...state.slice(0, index),
-        action.field,
-        ...state.slice(index + 1),
-      ];
+      return state.map((field) =>
+        field.fieldId === fieldId ? action.field : field
+      );
     }
     case "DELETE_FIELD": {
       return state.filter((field) => field.fieldId !== action.fieldId);
