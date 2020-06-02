@@ -37,6 +37,7 @@ const FormView = ({ formId }) => {
         <Col>
           <PreviewPane
             form={form}
+            tab={tab}
             setTab={setTab}
             setFieldIndex={setFieldIndex}
             fieldIndex={fieldIndex}
