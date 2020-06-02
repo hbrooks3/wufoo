@@ -1,15 +1,22 @@
-const form = (state = {}, action) => {
+const single_form = (state = {}, action) => {
   switch (action.type) {
-    case "UPDATE_FORM":
-      return action.form;
-    case "CREATE_FIELD":
-      const fields = [...state.fields, action.fieldId];
-      return { ...state, fields };
+    case "UPDATE_FORM": {
+      const { form, modified } = action;
+      return { ...form, modified };
+    }
+    case "CREATE_FIELD": {
+      const { fieldId, modified } = action;
+      const fields = [...state.fields, fieldId];
+      return { ...state, fields, modified };
+    }
+    case "UPDATE_FIELD": {
+      const { modified } = action;
+      return { ...state, modified };
+    }
     case "DELETE_FIELD": {
-      const fields = state.fields.filter(
-        (field) => field.fieldId !== action.fieldId
-      );
-      return { ...state, fields };
+      const { fieldId, modified } = action;
+      const fields = state.fields.filter((field) => field.fieldId !== fieldId);
+      return { ...state, fields, modified };
     }
     default:
       return state;
@@ -18,8 +25,8 @@ const form = (state = {}, action) => {
 
 export default (state = [], action) => {
   switch (action.type) {
-    case "CREATE_FORM":
-      const { userId } = action;
+    case "CREATE_FORM": {
+      const { userId, created, modified } = action;
       const newForm = {
         userId,
         formId: `form${Date.now()}`,
@@ -30,38 +37,38 @@ export default (state = [], action) => {
         lang: "English",
         labelPlacement: "top",
         fields: [],
+        created,
+        modified,
       };
       return [...state, newForm];
+    }
     case "UPDATE_FORM": {
-      const index = state.findIndex(
-        (form) => form.formId === action.form.formId
+      const { formId } = action.form;
+      return state.map((form) =>
+        form.formId === formId ? single_form(form, action) : form
       );
-      return [
-        ...state.slice(0, index),
-        form(state[index], action),
-        ...state.slice(index + 1),
-      ];
     }
     case "DELETE_FORM": {
-      return state.filter((form) => form.formId !== action.formId);
+      const { formId } = action;
+      return state.filter((form) => form.formId !== formId);
     }
     case "CREATE_FIELD": {
-      const index = state.findIndex((form) => form.formId === action.formId);
-      return [
-        ...state.slice(0, index),
-        form(state[index], action),
-        ...state.slice(index + 1),
-      ];
+      const { formId } = action;
+      return state.map((form) =>
+        form.formId === formId ? single_form(form, action) : form
+      );
+    }
+    case "UPDATE_FIELD": {
+      const { fieldId } = action.field;
+      return state.map((form) =>
+        form.fields.includes(fieldId) ? single_form(form, action) : form
+      );
     }
     case "DELETE_FIELD": {
-      const formIndex = state.findIndex((form) =>
-        form.fields.includes(action.fieldId)
+      const { fieldId } = action;
+      return state.map((form) =>
+        form.fields.includes(fieldId) ? single_form(form, action) : form
       );
-      return [
-        ...state.slice(0, formIndex),
-        form(state[formIndex], action),
-        ...state.slice(formIndex + 1),
-      ];
     }
     default:
       return state;

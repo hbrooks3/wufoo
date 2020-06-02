@@ -9,5 +9,7 @@ export default [
     lang: "English",
     labelPlacement: "top",
     fields: ["xyz", "hbk"],
+    created: 1591109360883,
+    modified: 1591109360883,
   },
 ];

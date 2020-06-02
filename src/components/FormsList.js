@@ -14,12 +14,17 @@ import Card from "react-bootstrap/Card";
 // Remove hardcode later
 const userId = "1234";
 
-const FormCard = ({ title, formId }) => (
+const FormCard = ({ title, formId, created, modified }) => (
   <Card key={formId} style={{ width: "100%" }} className="mb-3">
     <Card.Body>
       <Card.Title>
         <Link to={`/${formId}`}>{title}</Link>
       </Card.Title>
+      <Card.Text>
+        Created: {new Date(created).toLocaleDateString()}
+        <span className="mx-2">|</span>
+        Modified: {new Date(modified).toLocaleDateString()}
+      </Card.Text>
     </Card.Body>
   </Card>
 );
